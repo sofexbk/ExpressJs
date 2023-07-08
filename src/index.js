@@ -1,24 +1,34 @@
-//console.log("hello");
-const express=require('express');
+const express = require('express');
 
-const app =express();
+const app = express();
 const PORT = 3001;
 
-app.listen(PORT,()=>console.log(`running Epress server on port ${PORT}!` ))
+app.use(express.json());
+app.use(express.urlencoded());
+//{ extended: true }
+app.listen(PORT, () => console.log(`Running Express server on port ${PORT}!`));
 
-app.get('/Route1' ,(request,response)=>{
-   response.send([
-    {
-        item:'milki',
-        quantity:10,
-    },
-    {
-        item:'Toast',
-        quantity:30,
-    },
-    {
-        item:'Rejex',
-        quantity:100,
-    }
-   ])
+const Items = [
+  {
+    item: 'milki',
+    quantity: 10,
+  },
+  {
+    item: 'Toast',
+    quantity: 30,
+  },
+  {
+    item: 'Rejex',
+    quantity: 100,
+  },
+];
+
+app.get('/myroute', (request, response) => {
+  response.send(Items);
+});
+
+app.post('/myroute', (request, response) => {
+  console.log(request.body);
+  Items.push(request.body);
+  response.sendStatus(201);
 });
