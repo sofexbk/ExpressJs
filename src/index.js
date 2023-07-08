@@ -23,7 +23,11 @@ const Items = [
   },
 ];
 
-app.get('/myroute', (request, response) => {
+app.get('/myroute', 
+(request,response,next)=>{
+  console.log('Before Handling Request')
+},
+(request, response) => {
   response.send(Items);
 });
 
