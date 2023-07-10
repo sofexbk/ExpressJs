@@ -1,18 +1,15 @@
 const {Router} =require('express');
 const router=Router();
 
-const Items = [
+const markets = [
     {
-      item: 'milki',
-      quantity: 10,
+      store: 'marjane',
     },
     {
-      item: 'Toast',
-      quantity: 30,
+      store: 'waikiki',
     },
     {
-      item: 'Rejex',
-      quantity: 100,
+      store: 'flu',
     },
   ];
 
@@ -26,27 +23,25 @@ router.get('/',
   next();
 },*/
 (request,response) => {
-  response.send(Items);
+  response.send(markets);
   console.log('Finished handling get request');
 }
 );
 
-router.get('/:item',(request,response)=>{
+router.get('/:store',(request,response)=>{
   // request.params
-  console.log(request.params.item);
-  const {item}=request.params;
-  const ItemR=Items.find((g)=>g.item===item)
-  response.send(ItemR);
+  console.log(request.params.store);
+  const {store}=request.params;
+  const storeR=markets.find((g)=>g.store===store)
+  response.send(storeR);
   //response.send(200);
 });
 
 
 router.post('/', (request, response) => {
   console.log(request.body);
-  Items.push(request.body);
+  markets.push(request.body);
   response.sendStatus(201);
 });
-
-
 
 module.exports=router;
