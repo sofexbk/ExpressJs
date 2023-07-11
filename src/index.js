@@ -14,7 +14,7 @@ app.use((req,res,next)=>{
  })
 
  app.use('/api/v1/myroute',ItemsRoute)
- app.use('/api/v1/myroute',MarketsRoute)
+ app.use('/api/v1/markets',MarketsRoute)
  app.listen(PORT, () => console.log(`Running Express server on port ${PORT}!`));
 
 

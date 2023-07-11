@@ -3,13 +3,29 @@ const router=Router();
 
 const markets = [
     {
+      id:1,
       store: 'marjane',
+      miles:0.3
     },
     {
+      id:2,
       store: 'waikiki',
+      miles:0.9
     },
     {
+      id:3,
       store: 'flu',
+      miles:1
+    },
+    {
+      id:4,
+      store: 'Lg',
+      miles:7
+    },
+    {
+      id:5,
+      store: 'Kingstown',
+      miles:3.3
     },
   ];
 
@@ -23,6 +39,7 @@ router.get('/',
   next();
 },*/
 (request,response) => {
+  console.log(request.query)
   response.send(markets);
   console.log('Finished handling get request');
 }
