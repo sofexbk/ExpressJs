@@ -26,14 +26,16 @@ router.get('/',
   next();
 },*/
 (request,response) => {
+  response.cookie('visited',true,{maxAge:60000})
   response.send(Items);
   console.log('Finished handling get request');
-}
-);
+});
 
 router.get('/:item',(request,response)=>{
   // request.params
-  console.log(request.params.item);
+  //console.log(request.headers.cookie)
+  console.log(request.cookies)
+  //console.log(request.params.item);
   const {item}=request.params;
   const ItemR=Items.find((g)=>g.item===item)
   response.send(ItemR);
@@ -47,6 +49,14 @@ router.post('/', (request, response) => {
   response.sendStatus(201);
 });
 
+router.get('/cart',(request,response)=>{
 
+});
+router.post('/cart/item',(request,response)=>{
+  const {item,quantity}=request.body;
+  const cartItem={item,quantity};
+  //console.log(cartItem);
+  response.send(request.session);
+});
 
 module.exports=router;
