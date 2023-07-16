@@ -49,14 +49,31 @@ router.post('/', (request, response) => {
   response.sendStatus(201);
 });
 
-router.get('/cart',(request,response)=>{
-
+router.get('/shopping/cart',(request,response)=>{
+ const {cart}=request.session;
+ if(!cart){
+   response.send('You have no cart session')
+ }else{
+  response.send(cart);
+ }
 });
-router.post('/cart/item',(request,response)=>{
+
+
+router.post('/shopping/cart/item',(request,response)=>{
   const {item,quantity}=request.body;
   const cartItem={item,quantity};
   //console.log(cartItem);
-  response.send(request.session);
+  //response.send(request.sessionID);
+  const {cart}=request.session;
+  if(cart){
+   //const {items} =cart;
+    request.session.cart.items.push(cartItem);
+  }else{
+    request.session.cart={
+      items:[cartItem],
+    };
+  }
+  response.send(201);
 });
 
 module.exports=router;
