@@ -12,6 +12,9 @@ const PORT = 3001;
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser())
+
+
+//responsable sur session && cookies
 app.use(session({
   secret: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
   resave: false,
@@ -23,16 +26,24 @@ app.use(session({
 //app.use(bodyParser.json());
 //app.use(bodyParser.urlencoded({ extended: true }));
 //{ extended: true }
+
 app.use((req,res,next)=>{
   console.log(`${req.method}:${req.url}`);
   next();
- })
+ });
 
+
+/*app.use((req,res,next)=>{
+  if(req.session.user) next();
+  else res.send(401);
+});*/
+
+app.use('/api/v1/auth',authRoute);
  app.use('/api/v1/myroute',ItemsRoute)
  app.use('/api/v1/markets',MarketsRoute)
- app.use('/api/v1/auth',authRoute)
+ 
 
-
+//we can use login route globalyy her or locally in each page e(items,...)
 
  app.listen(PORT, () => console.log(`Running Express server on port ${PORT}!`));
 

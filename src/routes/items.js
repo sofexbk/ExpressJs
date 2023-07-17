@@ -16,6 +16,12 @@ const Items = [
     },
   ];
 
+
+router.use((req,res,next)=>{
+  if(req.session.user) next();
+  else res.send(401);
+});
+
 router.get('/', 
 /*(request,response,next)=>{
   console.log('Before Handling Request ');
@@ -26,7 +32,7 @@ router.get('/',
   next();
 },*/
 (request,response) => {
-  response.cookie('visited',true,{maxAge:60000})
+  //response.cookie('visited',true,{maxAge:60000})
   response.send(Items);
   console.log('Finished handling get request');
 });

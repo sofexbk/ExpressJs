@@ -29,6 +29,12 @@ const markets = [
     },
   ];
 
+
+router.use((req,res,next)=>{
+  if(req.session.user) next();
+  else res.send(401);
+});
+
 router.get('/', 
 /*(request,response,next)=>{
   console.log('Before Handling Request ');
