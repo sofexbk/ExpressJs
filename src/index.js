@@ -4,10 +4,12 @@ const MarketsRoute=require('./routes/markets')
 const cookieParser = require('cookie-parser')
 var session = require('express-session')
 const authRoute=require('./routes/auth')
-
+require('./database')
 
 const app = express();
 const PORT = 3001;
+
+
 
 app.use(express.json());
 app.use(express.urlencoded());
