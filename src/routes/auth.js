@@ -18,10 +18,14 @@ router.post('/login',(request,response)=>{
   }else response.sendStatus(401);
 });
 
+
+
 /*router.get('/login',(request,response)=> {
     response.send('Hello man')
 });*/
 
+
+//before hashing
 /*router.post('/register',async(request,response)=>{
  const {username,pasword,email}=request.body;
  const userDB=await User.findOne({$or:[{username},{email}]});
@@ -33,19 +37,25 @@ router.post('/login',(request,response)=>{
   response.send(201);
  }
 });*/
+
+
+
+
 router.post('/register',async(request,response)=>{
   const {username,email}=request.body;
   const userDB=await User.findOne({$or:[{username},{email}]});
   if(userDB){
    response.status(400).send({msg:'User already exists!'})
   }else{
-    const pasword=hashPassword(request.body.pasword);
-    console.log(pasword)
-   const newUser=await User.create({username,pasword,email});
+    const password=hashPassword(request.body.pasword);
+    console.log(password)
+   const newUser=await User.create({username,pasword:password,email});
    //newUser.save();
    response.send(201);
   }
  });
-
+//solution found when i added pasword:password
+//cue we creating pasword not password so => pasword:password
+// we wont unhashe the password , the idea is to save the hashed password, when user want to login then we well hash the credentials given by the user and compared it to the forst hashed password
 
 module.exports=router;
