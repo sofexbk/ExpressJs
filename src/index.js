@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 var session = require('express-session')
 const authRoute=require('./routes/auth')
 require('./database')
+const passport=require('passport')
 
 const app = express();
 const PORT = 3001;
@@ -40,6 +41,12 @@ app.use((req,res,next)=>{
   else res.send(401);
 });*/
 
+
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+//routes
 app.use('/api/v1/auth',authRoute);
  app.use('/api/v1/myroute',ItemsRoute)
  app.use('/api/v1/markets',MarketsRoute)
