@@ -6,6 +6,8 @@ var session = require('express-session')
 const authRoute=require('./routes/auth')
 require('./database')
 const passport=require('passport')
+require('./strategies/local')
+
 
 const app = express();
 const PORT = 3001;

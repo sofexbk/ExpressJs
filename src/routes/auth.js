@@ -4,6 +4,9 @@ const {hashPassword, comparePassword }=require('../utils/helpers');
 
 const router=Router();
 
+const passport =require('passport')
+
+
 /*router.post('/login',(request,response)=>{
   const{username,pasword}=request.body;
   if(username && pasword){
@@ -18,7 +21,8 @@ const router=Router();
   }else response.sendStatus(401);
 });*/
 
-router.post('/login',async(request,response)=>{
+//commented just avant passport
+/*router.post('/login',async(request,response)=>{
   const{email,pasword}=request.body;
   if(!email||!pasword) return response.send(400);
   const userDB=await User.findOne({email});
@@ -32,7 +36,18 @@ router.post('/login',async(request,response)=>{
     console.log('Failed to Authenticate');
     return response.send(401);
   }
-});
+});*/
+
+//using passport
+router.post('/login',passport.authenticate('local'),(req,res)=>{
+  console.log('Logged In')
+  res.send(200)
+})
+
+
+
+
+
 
 /*router.get('/login',(request,response)=> {
     response.send('Hello man')
@@ -78,7 +93,7 @@ router.post('/login',async(request,response)=>{
     console.log(password)
    const newUser=await User.create({username,pasword:password,email});
    //newUser.save();
-   response.send(201);
+   response.send(201);y
   }
  });
 
