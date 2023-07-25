@@ -93,7 +93,7 @@ router.post('/login',passport.authenticate('local'),(req,res)=>{
     console.log(password)
    const newUser=await User.create({username,pasword:password,email});
    //newUser.save();
-   response.send(201);y
+   response.send(201);
   }
  });
 

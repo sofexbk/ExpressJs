@@ -18,7 +18,10 @@ const Items = [
 
 
 router.use((req,res,next)=>{
-  if(req.session.user) next();
+ // if(req.session.user) next();
+   console.log('inside items auth check middleware')
+   console.log(req.user)
+  if(req.user) next();
   else res.send(401);
 });
 
