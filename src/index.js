@@ -3,6 +3,7 @@ const ItemsRoute=require('./routes/items')
 const MarketsRoute=require('./routes/markets')
 const cookieParser = require('cookie-parser')
 var session = require('express-session')
+const MongoStore=require('connect-mongo')
 const authRoute=require('./routes/auth')
 require('./database')
 const passport=require('passport')
@@ -11,7 +12,7 @@ require('./strategies/local')
 
 const app = express();
 const PORT = 3001;
-
+//const memoryStore=new session.MemoryStore();
 
 
 app.use(express.json());
@@ -25,6 +26,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
  // cookie: { secure: true }
+ // store:memoryStore,
+ store:MongoStore.create({
+  mongoUrl:'mongodb://127.0.0.1:27017/expressjstuto'
+ })
 }))
 
 //{ extended: true }
@@ -36,6 +41,11 @@ app.use((req,res,next)=>{
   console.log(`${req.method}:${req.url}`);
   next();
  });
+
+ /*app.use((req,res,next)=>{
+  console.log(memoryStore);
+  next();
+ });*/
 
 
 /*app.use((req,res,next)=>{
