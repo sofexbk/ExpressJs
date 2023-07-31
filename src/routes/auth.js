@@ -97,11 +97,20 @@ router.post('/login',passport.authenticate('local'),(req,res)=>{
   }
  });
 
-
-
-
 //solution found when i added pasword:password
 //cue we creating pasword not password so => pasword:password
 // we wont unhashe the password , the idea is to save the hashed password, when user want to login then we well hash the credentials given by the user and compared it to the forst hashed password
+
+router.get('/discord',passport.authenticate('discord'),(req,res)=>{
+  res.send(200)
+})
+
+router.get(
+  '/discord/redirect',
+  passport.authenticate('discord'),
+  (req,res) => {
+  res.send(200)
+})
+
 
 module.exports=router;

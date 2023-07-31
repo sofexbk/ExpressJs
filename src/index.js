@@ -7,8 +7,8 @@ const MongoStore=require('connect-mongo')
 const authRoute=require('./routes/auth')
 require('./database')
 const passport=require('passport')
-require('./strategies/local')
-
+//require('./strategies/local')
+require('./strategies/discord')
 
 const app = express();
 const PORT = 3001;
