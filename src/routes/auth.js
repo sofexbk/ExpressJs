@@ -1,7 +1,7 @@
 const {Router}=require('express');
 const User =require('../database/schemas/User')
 const {hashPassword, comparePassword }=require('../utils/helpers');
-
+import { authRegisterContorller } from '../controllers/auth';
 const router=Router();
 
 const passport =require('passport')
@@ -83,7 +83,7 @@ router.post('/login',passport.authenticate('local'),(req,res)=>{
  });*/
 
 
- router.post('/register',async(request,response)=>{
+/* router.post('/register',async(request,response)=>{
   const {email}=request.body;
   const userDB=await User.findOne({email});
   if(userDB){
@@ -95,7 +95,11 @@ router.post('/login',passport.authenticate('local'),(req,res)=>{
    //newUser.save();
    response.send(201);
   }
- });
+ });*/
+
+
+
+ router.post('/register',authRegisterContorller);
 
 //solution found when i added pasword:password
 //cue we creating pasword not password so => pasword:password
