@@ -21,6 +21,25 @@ passport.deserializeUser( async (id,done)=>{ // user,done
     done(err,null);//err, null=> no user
    }
 })
+async function discordVerifyFunction (accessToken,refreshToken,profile,done){
+        //console.log(accessToken,refreshToken)
+       // console.log(profile)
+       const {id:discordId}=profile;
+        try {
+            const discordUser=await DiscordUser.findOne({discordId })
+        if(discordUser){
+            //console.log(`Found User :${discordUser}`)
+            return done(null,discordUser)
+        }else{
+            const newUser=await DiscordUser.create({discordId})
+           // console.log(`Created User :${discordUser}`)
+            return done(null,newUser)
+        }  
+        } catch (err) {
+            console.log(err)
+            return done(err,null)
+        }
+}
 
 passport.use(
     new Strategy({
@@ -29,24 +48,7 @@ passport.use(
     callbackURL: 'http://localhost:3001/api/v1/auth/discord/redirect',
     scope: ['identify'],
 },
-   async (accessToken,refreshToken,profile,done)=>{
-    //console.log(accessToken,refreshToken)
-   // console.log(profile)
-   const {id:discordId}=profile;
-    try {
-        const discordUser=await DiscordUser.findOne({discordId })
-    if(discordUser){
-        //console.log(`Found User :${discordUser}`)
-        return done(null,discordUser)
-    }else{
-        const newUser=await DiscordUser.create({discordId})
-       // console.log(`Created User :${discordUser}`)
-        return done(null,newUser)
-    }  
-    } catch (err) {
-        console.log(err)
-        return done(err,null)
-    }
-}
-
+  discordVerifyFunction
 ))
+
+module.exports={discordVerifyFunction};
