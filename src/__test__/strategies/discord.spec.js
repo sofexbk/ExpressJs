@@ -27,7 +27,23 @@ describe('Discord Verify Function',()=>{
         }
         DiscordUser.findOne.mockResolvedValueOnce(mockedUser)
         await discordVerifyFunction(accessToken,refreshToken,profile,done);
-        expect(DiscordUser.findOne).toHaveBeenCalledWith({discordId:'23264'})
+        expect(DiscordUser.findOne).toHaveBeenCalledWith({discordId:profile.id})
         expect(done).toHaveBeenCalledWith(null,mockedUser);
     })
-})
+    it('should create user && return if not found',async()=>{
+        const newProfile={
+            id:'123',
+        }
+        const newUser={
+            id:1,
+            discordId:'123',
+            createdAt:new Date(),
+        }
+        DiscordUser.create.mockResolvedValueOnce(newUser)
+        DiscordUser.findOne.mockImplementationOnce(()=>undefined)
+        await discordVerifyFunction(accessToken,refreshToken,newProfile,done);
+        expect(DiscordUser.findOne).toHaveBeenCalledWith({discordId:newProfile.id})
+        expect(DiscordUser.findOne).toHaveReturnedWith(undefined)
+        expect(DiscordUser.create).toHaveBeenCalledWith({discordId:'123'})
+    })
+}) 
