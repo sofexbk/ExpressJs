@@ -48,6 +48,11 @@ it('should send a status code of 201 when new user is created',async()=>{
     pasword:'password'
   })
   await authRegisterContorller(request,response); 
+  //assertions
   expect(hashPassword).toHaveBeenCalledWith('fake_password')
-    
+  expect(User.create).toHaveBeenCalledWith({
+    email:'fake_email',
+    pasword:'hash password',
+  });
+  expect(response.send).toHaveBeenCalledWith(201)
 })
