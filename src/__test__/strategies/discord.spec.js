@@ -45,5 +45,6 @@ describe('Discord Verify Function',()=>{
         expect(DiscordUser.findOne).toHaveBeenCalledWith({discordId:newProfile.id})
         expect(DiscordUser.findOne).toHaveReturnedWith(undefined)
         expect(DiscordUser.create).toHaveBeenCalledWith({discordId:'123'})
+        expect(done).toHaveBeenCalledWith(null,newUser)
     })
 }) 
