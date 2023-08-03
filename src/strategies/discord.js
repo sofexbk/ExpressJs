@@ -30,26 +30,23 @@ passport.use(
     scope: ['identify'],
 },
    async (accessToken,refreshToken,profile,done)=>{
-    console.log(accessToken,refreshToken)
-    console.log(profile)
+    //console.log(accessToken,refreshToken)
+   // console.log(profile)
+   const {id:discordId}=profile;
     try {
-        const discordUser=await DiscordUser.findOne({
-            discordId:profile.id
-        })
+        const discordUser=await DiscordUser.findOne({discordId })
     if(discordUser){
-        console.log(`Found User :${discordUser}`)
+        //console.log(`Found User :${discordUser}`)
         return done(null,discordUser)
     }else{
-        const newUser=await DiscordUser.create({
-          discordId:profile.id,
-        })
-        console.log(`Created User :${discordUser}`)
+        const newUser=await DiscordUser.create({discordId})
+       // console.log(`Created User :${discordUser}`)
         return done(null,newUser)
     }  
     } catch (err) {
         console.log(err)
         return done(err,null)
     }
-
 }
+
 ))
