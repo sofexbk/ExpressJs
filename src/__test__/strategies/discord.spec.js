@@ -17,14 +17,17 @@ const done=jest.fn((x)=>x)
 
 
 //first we gonna mock the findOne
-it('should return user if found',async()=>{
-    const mockedUser={
-        id:'id_123',
-        discordId:'profile.id',
-        createdAt:new Date()
-    }
-    DiscordUser.findOne.mockResolvedValueOnce(mockedUser)
-    await discordVerifyFunction(accessToken,refreshToken,profile,done);
-    expect(DiscordUser.findOne).toHaveBeenCalledWith({discordId:'23264'})
-    expect(done).toHaveBeenCalledWith(null,mockedUser);
+
+describe('Discord Verify Function',()=>{
+    it('should return user if found',async()=>{
+        const mockedUser={
+            id:'id_123',
+            discordId:'profile.id',
+            createdAt:new Date()
+        }
+        DiscordUser.findOne.mockResolvedValueOnce(mockedUser)
+        await discordVerifyFunction(accessToken,refreshToken,profile,done);
+        expect(DiscordUser.findOne).toHaveBeenCalledWith({discordId:'23264'})
+        expect(done).toHaveBeenCalledWith(null,mockedUser);
+    })
 })
